@@ -1,4 +1,4 @@
-# mybricks-app-pcspa
+# mybricks-app-layout-pc
 PC通用搭建应用
 ## dev
 启动react应用及服务

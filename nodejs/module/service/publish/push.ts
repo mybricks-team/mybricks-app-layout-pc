@@ -174,7 +174,7 @@ export async function publishPush(
     const result = await API.File.publish({
       userId,
       fileId,
-      extName: "pc-page",
+      extName: "pc-layout",
       commitInfo,
       content: JSON.stringify({ ...publishMaterialInfo, json }),
       type: envType,
@@ -230,7 +230,7 @@ async function customPublish(params) {
     publisherName: publisherName || "",
     version: !!nowVersion ? nowVersion : version,
     commitInfo,
-    type: "pc-page",
+    type: "pc-layout",
     groupId,
     groupName,
     content: {

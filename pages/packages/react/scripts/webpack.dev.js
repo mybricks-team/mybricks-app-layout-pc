@@ -28,7 +28,7 @@ module.exports = merge(common, {
       {
         context: ['/api/pcpage/publish', '/api/pcpage/upload', '/api/pcpage/rollback', '/api/pcpage/download-product'],
         // target: 'https://my.mybricks.world',
-        target: 'http://localhost:9002/mybricks-app-pcspa',
+        target: 'http://localhost:9002/mybricks-app-layout-pc',
         secure: false,
         changeOrigin: true,
       },
