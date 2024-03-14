@@ -102,6 +102,7 @@ export default function MyDesigner({ appData: originAppData }) {
         sessionStorageMock: [],
       },
       directConnection: appData.fileContent?.content?.directConnection || false,
+      routerParams: appData.fileContent?.content?.routerParams || [],
       MYBRICKS_HOST: appData.fileContent?.content?.MYBRICKS_HOST || {},
       fontJS: appData.fileContent?.content?.fontJS,
       // 将新设置的环境附加到当前页面中，不能删除原有的环境
@@ -305,6 +306,7 @@ export default function MyDesigner({ appData: originAppData }) {
     json.hasPermissionFn = ctx.hasPermissionFn
     json.debugHasPermissionFn = ctx.debugHasPermissionFn
     json.fontJS = ctx.fontJS
+    json.routerParams = ctx.routerParams
 
     json.projectId = ctx.sdk.projectId;
 
