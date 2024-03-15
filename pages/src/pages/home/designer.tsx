@@ -533,7 +533,9 @@ export default function MyDesigner({ appData: originAppData }) {
     }
   }, [ctx.debugMockConfig?.localStorageMock, ctx.debugMockConfig?.sessionStorageMock])
 
+  // @ts-expect-error
   window.designerRef = designerRef
+  window['layoutPC__routerParams'] = ctx.routerParams;
 
   return (
     <div className={`${css.view} fangzhou-theme`}>

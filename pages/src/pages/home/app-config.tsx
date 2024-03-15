@@ -466,11 +466,21 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                 options: {
                   getTitle: (item) => {
                     return `${item.route} - ${
-                      pagesOptions.find((o) => o.value === item.pageId)?.label ||
-                      ""
+                      pagesOptions.find((o) => o.value === item.pageId)
+                        ?.label || ""
                     }`;
                   },
+                  onAdd: () => {
+                    return {
+                      id: (Math.random() * 10000 * Date.now()).toString(36),
+                    };
+                  },
                   items: [
+                    {
+                      title: "菜单项标题",
+                      type: "text",
+                      value: "menuTitle",
+                    },
                     {
                       title: "路由",
                       type: "text",
@@ -480,8 +490,22 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                       title: "页面",
                       type: "select",
                       value: "pageId",
-                      options: {
-                        options: pagesOptions,
+                      options: { options: pagesOptions, showSearch: true },
+                    },
+                    {
+                      title: "父菜单项",
+                      type: "select",
+                      value: "parentId",
+                      options: () => {
+                        const menuOptions = ctx.routerParams.map((item) => ({
+                          label: item.menuTitle,
+                          value: item.id,
+                        }));
+                        return {
+                          options: menuOptions,
+                          showSearch: true,
+                          allowClear: true,
+                        };
                       },
                     },
                   ],
@@ -495,6 +519,9 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                   set({ data, focusArea, output, input, ...res }, value) {
                     ctx.routerParams = value;
+                    window["layoutPC__onRouterParamsChange"]?.forEach((fn) =>
+                      fn(value)
+                    );
                   },
                 },
               },
