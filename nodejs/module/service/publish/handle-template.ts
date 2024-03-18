@@ -11,7 +11,8 @@ export async function handleTemplate({
   envList,
   projectId,
   version,
-  i18nLangContent
+  i18nLangContent,
+  routerParams,
 }) {
   const themesStyleStr = genThemesStyleStr(json);
 
@@ -65,7 +66,8 @@ export async function handleTemplate({
       projectId ? projectId : JSON.stringify(null)
     )
     .replace(`--localeScript--`, JSON.stringify(localeScript))
-    .replace(`--domain-service-path--`, domainServicePath);
+    .replace(`--domain-service-path--`, domainServicePath)
+    .replace(`-- routerParams --`, JSON.stringify(routerParams));
 
   Logger.info("[publish] 模板替换完成");
 

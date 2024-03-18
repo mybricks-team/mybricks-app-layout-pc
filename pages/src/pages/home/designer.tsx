@@ -379,6 +379,7 @@ export default function MyDesigner({ appData: originAppData }) {
           json.projectId = ctx.sdk.projectId;
           json.i18nLangContent = i18nLangContentFilter(ctx.i18nLangContent, ctx.i18nUsedIdList)
           json.operationList = operationList.current.reverse();
+          json.routerParams = ctx.routerParams
 
           await ctx.save({ content: JSON.stringify(json), name: ctx.fileName }, true);
           operationList.current = [];
@@ -408,6 +409,7 @@ export default function MyDesigner({ appData: originAppData }) {
               groupName: appData?.hierarchy?.groupName || '',
               groupId: appData?.hierarchy?.groupId || 0,
               appConfig,
+              routerParams: ctx.routerParams,
             },
             hasPermissionFn: ctx.hasPermissionFn
           }
