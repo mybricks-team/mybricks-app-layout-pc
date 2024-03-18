@@ -9,7 +9,7 @@ export class PreviewStorage {
 
   getFileKeyTemplate = (fileId) => `--preview-${fileId}-`;
 
-  savePreviewPageData = ({ dumpJson, comlibs, hasPermissionFn, executeEnv, debugMockConfig, appConfig, envList, MYBRICKS_HOST, directConnection, i18nLangContent }) => {
+  savePreviewPageData = ({ dumpJson, comlibs, hasPermissionFn, executeEnv, debugMockConfig, appConfig, envList, MYBRICKS_HOST, directConnection, i18nLangContent, routerParams }) => {
     sessionStorage.setItem(`--preview-${this.fileId}-`, JSON.stringify(dumpJson))
     sessionStorage.setItem(`--preview--comlibs--${this.fileId}-`, JSON.stringify(comlibs))
     sessionStorage.setItem(`--preview--hasPermissionFn--${this.fileId}-`, hasPermissionFn)
@@ -20,6 +20,7 @@ export class PreviewStorage {
     sessionStorage.setItem(`--preview--MYBRICKS_HOST--${this.fileId}-`, JSON.stringify(MYBRICKS_HOST))
     sessionStorage.setItem(`--preview--i18nLangContent--${this.fileId}-`, JSON.stringify(i18nLangContent))
     sessionStorage.setItem(`--preview--debugMockConfig--${this.fileId}-`, JSON.stringify(debugMockConfig))
+    sessionStorage.setItem(`--preview--routerParams--${this.fileId}-`, JSON.stringify(routerParams))
   }
 
   getPreviewPageData = () => {
@@ -28,6 +29,7 @@ export class PreviewStorage {
     let hasPermissionFn = sessionStorage.getItem(`--preview--hasPermissionFn--${this.fileId}-`)
     let executeEnv = sessionStorage.getItem(`--preview--executeEnv--${this.fileId}-`)
     let debugMockConfig = sessionStorage.getItem(`--preview--debugMockConfig--${this.fileId}-`)
+    window['layoutPC__routerParams'] = JSON.parse(sessionStorage.getItem(`--preview--routerParams--${this.fileId}-`))
     let directConnection = false;
     let MYBRICKS_HOST
     let appConfig

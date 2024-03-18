@@ -341,7 +341,8 @@ export default function MyDesigner({ appData: originAppData }) {
       comlibs: getRtComlibsFromConfigEdit(ctx.comlibs),
       hasPermissionFn: ctx.hasPermissionFn,
       appConfig: JSON.stringify(appConfig),
-      i18nLangContent: ctx.i18nLangContent
+      i18nLangContent: ctx.i18nLangContent,
+      routerParams: ctx.routerParams
     })
 
     window.open(`./preview.html?fileId=${ctx.fileId}`)
