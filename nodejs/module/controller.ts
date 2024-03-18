@@ -187,21 +187,51 @@ export default class PcPageController {
     }
   }
 
-  // @Post('/generateHTML')
-  // async generateHTML(
-  //   @Body('userId') userId: string,
-  //   @Body('fileId') fileId: number,
-  //   @Body('json') json: any,
-  //   @Req() req: any
-  // ) {
-  // 	if (!isDefined(json) || !isDefined(fileId)) {
-  // 		return { code: 0, message: '参数 json、fileId 不能为空' };
-  // 	}
+  @Post("/custom-publish")
+  async customPublish(
+    @Body("fileId") fileId: number,
+    @Body("envType") envType: string,
+    @Body("nowVersion") nowVersion: string,
+    @Body("title") title: string,
+    @Body("template") template: string,
+    @Req() req: any
+  ) {
+    try {
+      Logger.info(`[custom-publish] 调用发布集成接口`);
 
-  // 	const res = await this.service.generateHTML(req, { json, fileId });
+      const startTime = Date.now();
+      const result = await this.service.customPublish(req, {
+        fileId,
+        envType,
+        nowVersion,
+        title,
+        template,
+      });
 
-  // 	return res.code !== 1 ? { code: 0, message: res.error } : { code: 1, data: { bundle: res.data, ext_name: 'html' } };
-  // }
+      Logger.info("[custom-publish] 发布集成执行成功！");
+      Logger.info(
+        `[custom-publish] 发布集成执行时长：${String(
+          (Date.now() - startTime) / 1000
+        )}s`
+      );
+
+      return {
+        code: 1,
+        data: result,
+        message: "发布集成执行完成",
+      };
+    } catch (error) {
+      Logger.error(
+        `[custom-publish] 发布集成执行失败: ${
+          error?.message || JSON.stringify(error, null, 2)
+        }`
+      );
+      return {
+        code: -1,
+        message: error?.message || "发布集成执行失败",
+      };
+    }
+  }
 }
 
 export function isDefined(v: any) {
