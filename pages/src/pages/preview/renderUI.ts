@@ -9,8 +9,8 @@ import { runJs } from "@/utils/runJs";
 import { connectorLoader } from "@/utils/connectorLoader";
 import { PreviewStorage } from "@/utils/previewStorage";
 // import { mock as connectorHttpMock } from '@mybricks/plugin-connector-http'
-import connectorHttpMock from '@mybricks/plugin-connector-http/runtime/mock'
-import { call as callDomainHttp } from '@mybricks/plugin-connector-domain/runtime';
+import connectorHttpMock from "@mybricks/plugin-connector-http/runtime/mock";
+import { call as callDomainHttp } from "@mybricks/plugin-connector-domain/runtime";
 import { proxLocalStorage, proxSessionStorage } from "@/utils/debugMockUtils";
 
 const fileId = getQueryString("fileId");
@@ -25,18 +25,32 @@ const {
   MYBRICKS_HOST,
   directConnection,
   i18nLangContent,
-  debugMockConfig
+  debugMockConfig,
 } = previewStorage.getPreviewPageData();
 
+proxLocalStorage(debugMockConfig?.localStorageMock);
+proxSessionStorage(debugMockConfig?.sessionStorageMock);
 
-proxLocalStorage(debugMockConfig?.localStorageMock)
-proxSessionStorage(debugMockConfig?.sessionStorageMock)
+const refsRef = { current: null };
 const root = ({ renderType, env, ...props }) => {
+  window.addEventListener("popstate", (...args) => {
+    // 获取当前路由
+    var currentRoute = window.location.pathname;
+    const pageId = window["layoutPC__routerParams"]?.find(
+      (item: any) => item.route === currentRoute
+    )?.pageId;
+    refsRef.current.canvas.open(pageId, null, "redirect");
+  });
+
   const renderUI = getRenderWeb(renderType);
   if (!renderUI) {
     throw Error(`找不到${renderType}渲染器`);
   }
   return renderUI(dumpJson, {
+    sceneOpenType: "redirect",
+    ref(refs) {
+      refsRef.current = refs;
+    },
     env: {
       ...env,
       renderCom(json, opts, coms) {
@@ -53,8 +67,11 @@ const root = ({ renderType, env, ...props }) => {
       },
       i18n(title) {
         //多语言
-        if (typeof title?.id === 'undefined') return title
-        return i18nLangContent[title.id]?.content?.[env.locale] || JSON.stringify(title)
+        if (typeof title?.id === "undefined") return title;
+        return (
+          i18nLangContent[title.id]?.content?.[env.locale] ||
+          JSON.stringify(title)
+        );
       },
       /** 调用领域模型 */
       callDomainModel(domainModel, type, params) {
@@ -77,8 +94,8 @@ const root = ({ renderType, env, ...props }) => {
           const curConnector = connector.script
             ? connector
             : (dumpJson.plugins[connector.connectorName] || []).find(
-              (con) => con.id === connector.id
-            );
+                (con) => con.id === connector.id
+              );
 
           if (curConnector?.globalMock || connectorConfig?.openMock) {
             return connectorHttpMock({ ...connector, ...connectorConfig }, {});
@@ -86,34 +103,35 @@ const root = ({ renderType, env, ...props }) => {
 
           return curConnector
             ? plugin.call(
-              { ...connector, ...curConnector, useProxy: !directConnection },
-              newParams,
-              {
-                ...connectorConfig,
-                /** http-sql表示为领域接口 */
-                before: connector.type === 'http-sql' ?
-                  options => {
-                    const newOptions = { ...options }
-                    if (!newOptions.headers) {
-                      newOptions.headers = {};
-                    }
-                    newOptions.headers['x-mybricks-debug'] = 'true';
+                { ...connector, ...curConnector, useProxy: !directConnection },
+                newParams,
+                {
+                  ...connectorConfig,
+                  /** http-sql表示为领域接口 */
+                  before:
+                    connector.type === "http-sql"
+                      ? (options) => {
+                          const newOptions = { ...options };
+                          if (!newOptions.headers) {
+                            newOptions.headers = {};
+                          }
+                          newOptions.headers["x-mybricks-debug"] = "true";
 
-                    return newOptions;
-                  }
-                  : (options) => {
-                    return {
-                      ...options,
-                      url: shapeUrlByEnv(
-                        envList,
-                        executeEnv,
-                        options.url,
-                        MYBRICKS_HOST
-                      ),
-                    };
-                  },
-              }
-            )
+                          return newOptions;
+                        }
+                      : (options) => {
+                          return {
+                            ...options,
+                            url: shapeUrlByEnv(
+                              envList,
+                              executeEnv,
+                              options.url,
+                              MYBRICKS_HOST
+                            ),
+                          };
+                        },
+                }
+              )
             : Promise.reject("接口不存在，请检查连接器插件中接口配置");
         } else {
           return Promise.reject("错误的连接器类型");

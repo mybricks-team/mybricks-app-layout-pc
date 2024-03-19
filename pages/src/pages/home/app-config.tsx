@@ -25,6 +25,7 @@ import { USE_CUSTOM_HOST } from "./constants";
 import { fAxios } from "@/services/http";
 import { createFromIconfontCN } from "@ant-design/icons";
 import download from "@/utils/download";
+import { render as renderUI } from "@mybricks/render-web";
 
 const defaultPermissionComments = `/**
 *
@@ -150,7 +151,18 @@ const getExecuteEnvByMode = (debugMode, ctx, envList) => {
   }
 };
 
+const refsRef = { current: null };
+
 export default function (ctx, appData, save, designerRef, remotePlugins = []) {
+  window.addEventListener("popstate", (...args) => {
+    // 获取当前路由
+    var currentRoute = window.location.pathname;
+    const pageId = window["layoutPC__routerParams"]?.find(
+      (item: any) => item.route === currentRoute
+    )?.pageId;
+    pageId && refsRef.current.canvas.open(pageId, null, "redirect");
+  });
+
   const envList = ctx.envList;
   // 获得环境信息映射表
   const envMap = [
@@ -307,9 +319,15 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
     );
   }
   return {
-    // debugger(json, opts) {
-    //   return renderUI(json, opts)
-    // },
+    debugger(json, opts) {
+      return renderUI(json, {
+        ...opts,
+        sceneOpenType: "redirect",
+        ref(refs) {
+          refsRef.current = refs;
+        },
+      });
+    },
     shortcuts: {
       "ctrl+s": [save],
     },

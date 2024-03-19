@@ -30,11 +30,25 @@ const isEqual = (param1, param2) => {
   return param1 === param2
 }
 
+const refsRef = { current: null };
 const root = ({ renderType, locale, runtime, ...props }) => {
+  window.addEventListener("popstate", (...args) => {
+    // 获取当前路由
+    var currentRoute = window.location.pathname;
+    const pageId = window["layoutPC__routerParams"]?.find(
+      (item: any) => item.route === currentRoute
+    )?.pageId;
+    refsRef.current.canvas.open(pageId, null, "redirect");
+  });
+
   const renderUI = getRenderWeb(renderType);
   const domainServicePath = '--domain-service-path--';//replace it
 
   return renderUI(projectJson, {
+    sceneOpenType: "redirect",
+    ref(refs) {
+      refsRef.current = refs;
+    },
     env: {
       runtime,
       silent: true,
