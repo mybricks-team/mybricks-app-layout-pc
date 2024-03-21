@@ -89,7 +89,7 @@ export async function publishPush(
       throw e;
     }
 
-    Logger.info("[publish] 推送数据成功！");
+    Logger.info(`[publish] 推送数据成功！发布集成接口返回值: ${JSON.stringify(publishMaterialInfo, null, 2)}`);
 
     if (!publishMaterialInfo?.url) {
       const errStr = `[publish] 发布集成接口出错: 没有返回url`;

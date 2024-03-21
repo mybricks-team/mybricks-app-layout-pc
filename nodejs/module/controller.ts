@@ -19,6 +19,7 @@ import { getAppTypeFromTemplate } from "./tools/common";
 import { getAppConfig } from "./tools/get-app-config";
 
 import { Response } from "express";
+import { CustomPublishDataParams } from "./service/custom-publish";
 
 const pkg = require("../../package.json");
 const template = fs.readFileSync(
@@ -62,13 +63,13 @@ export default class PcPageController {
 
       const jsonTransform = isEncode
         ? JSON.parse(
-            decodeURIComponent(
-              Buffer.from(
-                typeof json === "string" ? json : JSON.stringify(json),
-                "base64"
-              ).toString()
-            )
+          decodeURIComponent(
+            Buffer.from(
+              typeof json === "string" ? json : JSON.stringify(json),
+              "base64"
+            ).toString()
           )
+        )
         : json;
 
       const result = await this.service.publish(req, {
@@ -134,8 +135,7 @@ export default class PcPageController {
       };
     } catch (error) {
       Logger.error(
-        `[rollback] 回滚失败: ${
-          error?.message || JSON.stringify(error, null, 2)
+        `[rollback] 回滚失败: ${error?.message || JSON.stringify(error, null, 2)
         }`
       );
       return {
@@ -176,8 +176,7 @@ export default class PcPageController {
       };
     } catch (error) {
       Logger.error(
-        `[downloadProduct] 下载发布产物失败: ${
-          error?.message || JSON.stringify(error, null, 2)
+        `[downloadProduct] 下载发布产物失败: ${error?.message || JSON.stringify(error, null, 2)
         }`
       );
       return {
@@ -189,24 +188,14 @@ export default class PcPageController {
 
   @Post("/custom-publish")
   async customPublish(
-    @Body("fileId") fileId: number,
-    @Body("envType") envType: string,
-    @Body("nowVersion") nowVersion: string,
-    @Body("title") title: string,
-    @Body("template") template: string,
+    @Body() publishData: CustomPublishDataParams,
     @Req() req: any
   ) {
     try {
       Logger.info(`[custom-publish] 调用发布集成接口`);
 
       const startTime = Date.now();
-      const result = await this.service.customPublish(req, {
-        fileId,
-        envType,
-        nowVersion,
-        title,
-        template,
-      });
+      const result = await this.service.customPublish(req, publishData);
 
       Logger.info("[custom-publish] 发布集成执行成功！");
       Logger.info(
@@ -214,16 +203,12 @@ export default class PcPageController {
           (Date.now() - startTime) / 1000
         )}s`
       );
+      Logger.info(`[custom-publish] 发布集成返回值: ${JSON.stringify(result, null, 2)}`)
 
-      return {
-        code: 1,
-        data: result,
-        message: "发布集成执行完成",
-      };
+      return result;
     } catch (error) {
       Logger.error(
-        `[custom-publish] 发布集成执行失败: ${
-          error?.message || JSON.stringify(error, null, 2)
+        `[custom-publish] 发布集成执行失败: ${error?.message || JSON.stringify(error, null, 2)
         }`
       );
       return {
