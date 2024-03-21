@@ -29,11 +29,7 @@ const SERVER_TREE = "{\"id\":\"node-36327\",\"path\":\"/kuaishou/kwaishop/kwaish
 export async function customPublish(
   req: any,
   customPublishDataParams: CustomPublishDataParams,
-  retry: number = 0
 ) {
-  if (retry !== 0) {
-    Logger.info(`[custom-publish] 第${retry}次重试发布集成执行...`);
-  }
 
   try {
     // doing something
@@ -41,11 +37,21 @@ export async function customPublish(
 
     const deployEnv = env === 'prod' ? 'prod' : 'staging';
 
+    Logger.info(`[custom-publish] 正在生成发布内容...`)
+    const deployContent = (() => {
+      let result = content.html;
+      if (content.js.length) {
+        Logger.info(`[custom-publish] 正在注入组件库 JS 到 HTML 中...`)
+        result = result.replace(`<script src="./${content.js[0]?.name}"></script>`, function () { return `<script defer> (${content.js[0].content}) </script>` })
+      }
+      return result;
+    })();
+
     const deployData = {
       /** 文件唯一标识 */
       uri: `/layout/${deployEnv}/${productId}`,
       /** 文件内容 */
-      content: content.html,
+      content: deployContent,
       /** 文件名 */
       fileName: productName,
       /** 部署的环境，staging、prt、prod */
