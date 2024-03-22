@@ -49,7 +49,7 @@ export async function customPublish(
 
     const deployData = {
       /** 文件唯一标识 */
-      uri: `/layout/${deployEnv}/${productId}`,
+      uri: `/layout/${env}/${productId}`,
       /** 文件内容 */
       content: deployContent,
       /** 文件名 */
@@ -59,7 +59,7 @@ export async function customPublish(
       /** 文件版本 */
       version: version,
       /** 域名访问路径 */
-      routerPath: `/layout/${deployEnv}/${productId}`,
+      routerPath: `/layout/${env}/${productId}`,
       /** 发布日志，上线信息 */
       commitInfo: commitInfo,
       /** 创建产品库和服务所需的其他信息（选填） */
@@ -76,8 +76,7 @@ export async function customPublish(
     }
 
     Logger.info(`[custom-publish] 调用发布集成接口，参数为: ${JSON.stringify({ ...deployData, content: '简化展示信息...' }, null, 2)}`);
-
-    const res: any = await axios.post('https://eshop-fangzhou.staging.kuaishou.com/api/paas/kfx/deploy', deployData)
+    const res: any = await axios.post('https://fangzhou.corp.kuaishou.com/api/paas/kfx/deploy', deployData)
 
     if (res.data.code === -1) {
       throw new Error(res.data.message)
