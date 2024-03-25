@@ -511,6 +511,11 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                       options: { options: pagesOptions, showSearch: true },
                     },
                     {
+                      title: "子应用页面URL",
+                      type: "text",
+                      value: "pageUrl",
+                    },
+                    {
                       title: "父菜单项",
                       type: "select",
                       value: "parentId",
