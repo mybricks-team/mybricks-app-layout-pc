@@ -37,19 +37,22 @@ export async function customPublish(
 
     const deployEnv = env === 'prod' ? 'prod' : 'staging';
 
+    const basePathname = `/layout/scope/${env}/${productId}`;
+
     Logger.info(`[custom-publish] 正在生成发布内容...`)
     const deployContent = (() => {
       let result = content.html;
       if (content.js.length) {
         Logger.info(`[custom-publish] 正在注入组件库 JS 到 HTML 中...`)
-        result = result.replace(`<script src="./${content.js[0]?.name}"></script>`, function () { return `<script defer> (${content.js[0].content}) </script>` })
+        const injectScript = `<script> window['layoutPC__basePathname'] = ${basePathname} </script>`
+        result = result.replace(`<script src="./${content.js[0]?.name}"></script>`, function () { return `${injectScript} <script> (${content.js[0].content}) </script>` })
       }
       return result;
     })();
 
     const deployData = {
       /** 文件唯一标识 */
-      uri: `/layout/scope/${env}/${productId}`,
+      uri: basePathname,
       /** 文件内容 */
       content: deployContent,
       /** 文件名 */
@@ -59,7 +62,7 @@ export async function customPublish(
       /** 文件版本 */
       version: version,
       /** 域名访问路径 */
-      routerPath: `/layout/scope/${env}/${productId}`,
+      routerPath: basePathname,
       /** 发布日志，上线信息 */
       commitInfo: commitInfo,
       /** 访问类型 1 路由前缀匹配 2 绝对匹配 */
