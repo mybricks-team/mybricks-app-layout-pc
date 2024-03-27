@@ -44,7 +44,7 @@ export async function customPublish(
       let result = content.html;
       if (content.js.length) {
         Logger.info(`[custom-publish] 正在注入组件库 JS 到 HTML 中...`)
-        const injectScript = `<script> window['layoutPC__basePathname'] = ${basePathname} </script>`
+        const injectScript = `<script> window['layoutPC__basePathname'] = "${basePathname}" </script>`
         result = result.replace(`<script src="./${content.js[0]?.name}"></script>`, function () { return `${injectScript} <script> (${content.js[0].content}) </script>` })
       }
       return result;
