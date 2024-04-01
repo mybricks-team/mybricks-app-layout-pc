@@ -9,9 +9,10 @@
     "watch:test": "npm i && nodemon --ext js,ts --exec 'NODE_ENV=development MYBRICKS_PLATFORM_ADDRESS=http://test.mybricks.world node nodejs/index.js'",
     "build:react": "cd pages && npm run build:react",
     "build:vue2": "cd pages && npm run build:vue2",
-    "publish:offline": "node ./publish.js offline",
-    "publish:online:serviceUpdate": "node ./publish.js --origin=https://my.mybricks.world",
-    "updateLocalPublic": "ts-node update_local_public"
+    "publish:offline": "npm run reInstall:prod && node ./publish.js offline",
+    "publish:online:serviceUpdate": "npm run reInstall:prod && node ./publish.js --origin=https://my.mybricks.world",
+    "updateLocalPublic": "ts-node update_local_public",
+    "reInstall:prod": "rm -rf node_modules && npm install --production && cd pages && rm -rf node_modules && npm install --production && cd .."
   },
   "keywords": [
     "mybricks",
@@ -41,11 +42,11 @@
     "mkdirp": "^3.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.5",
-    "rxjs": "^7.6.0"
+    "rxjs": "^7.6.0",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "@types/node": "^20.4.0",
-    "shelljs": "^0.8.5",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"
   },

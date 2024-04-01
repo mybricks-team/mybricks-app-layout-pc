@@ -21,11 +21,13 @@ export default {
       tag: "script",
       path: "public/react@18.0.0.production.min.js",
       CDN: "//f2.eckwai.com/kos/nlav11092/fangzhou/pub/temp/1690446345009.react.18.0.0.production.min.js",
+      // CDN: "//unpkg.com/react@18/umd/react.development.js",
     },
     {
       tag: "script",
       path: "public/react-dom@18.0.0.production.min.js",
       CDN: "//f2.eckwai.com/kos/nlav11092/fangzhou/pub/temp/1690443341846.umd_react-dom.production.min.js",
+      // CDN: "//unpkg.com/react-dom@18/umd/react-dom.development.js",
     },
     {
       tag: "script",
