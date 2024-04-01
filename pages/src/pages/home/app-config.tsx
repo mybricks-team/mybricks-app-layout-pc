@@ -478,7 +478,7 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                 },
               },
               {
-                title: "路由参数",
+                title: "壳应用路由",
                 description: "声明路由关系，哪个路由展示那个页面",
                 type: "array",
                 options: {
