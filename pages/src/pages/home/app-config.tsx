@@ -216,24 +216,24 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
   const debugModeOptions =
     envList.length > 0
       ? [
-          { label: "选择环境", value: EnumMode.ENV },
-          { label: "自定义域名", value: EnumMode.CUSTOM },
-        ]
+        { label: "选择环境", value: EnumMode.ENV },
+        { label: "自定义域名", value: EnumMode.CUSTOM },
+      ]
       : [
-          { label: "默认", value: EnumMode.DEFAULT },
-          { label: "自定义域名", value: EnumMode.CUSTOM },
-        ];
+        { label: "默认", value: EnumMode.DEFAULT },
+        { label: "自定义域名", value: EnumMode.CUSTOM },
+      ];
 
   const adder: Array<{
     type: string;
     title: string;
     template?: Record<string, any>;
   }> = [
-    {
-      type: "normal",
-      title: "页面",
-    },
-  ];
+      {
+        type: "normal",
+        title: "页面",
+      },
+    ];
   if (isReact) {
     adder.push(
       ...[
@@ -254,16 +254,7 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
             deletable: false,
             asRoot: true,
           },
-        },
-        {
-          type: "popup",
-          title: "打印对话框",
-          template: {
-            namespace: "mybricks.normal-pc.print",
-            deletable: false,
-            asRoot: true,
-          },
-        },
+        }
       ]
     );
   }
@@ -277,47 +268,47 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
       isPrivatization: ctx.setting?.system.config?.isPureIntranet === true,
       addActions: domainApp
         ? [
-            {
-              type: "http-sql",
-              title: "领域接口",
-              noUseInnerEdit: true,
-              getTitle: (item) => {
-                return item.content?.domainServiceMap
-                  ? item.content.title
-                  : `${item.content.title || ""}(未选择)`;
-              },
-              render: (props) => {
-                return (
-                  <CollaborationHttp
-                    {...props}
-                    openFileSelector={() =>
-                      openFilePanel({
-                        allowedFileExtNames: ["domain"],
-                        parentId: ctx.sdk.projectId,
-                        fileId: ctx.fileId,
-                      })
-                    }
-                  />
-                );
-              },
+          {
+            type: "http-sql",
+            title: "领域接口",
+            noUseInnerEdit: true,
+            getTitle: (item) => {
+              return item.content?.domainServiceMap
+                ? item.content.title
+                : `${item.content.title || ""}(未选择)`;
             },
-          ]
+            render: (props) => {
+              return (
+                <CollaborationHttp
+                  {...props}
+                  openFileSelector={() =>
+                    openFilePanel({
+                      allowedFileExtNames: ["domain"],
+                      parentId: ctx.sdk.projectId,
+                      fileId: ctx.fileId,
+                    })
+                  }
+                />
+              );
+            },
+          },
+        ]
         : void 0,
     }),
   ];
-  if (domainApp) {
-    connetorPlugins.push(
-      domainServicePlugin({
-        openFileSelector() {
-          return openFilePanel({
-            allowedFileExtNames: ["domain"],
-            parentId: ctx.sdk.projectId,
-            fileId: ctx.fileId,
-          });
-        },
-      })
-    );
-  }
+  // if (domainApp) {
+  //   connetorPlugins.push(
+  //     domainServicePlugin({
+  //       openFileSelector() {
+  //         return openFilePanel({
+  //           allowedFileExtNames: ["domain"],
+  //           parentId: ctx.sdk.projectId,
+  //           fileId: ctx.fileId,
+  //         });
+  //       },
+  //     })
+  //   );
+  // }
   return {
     debugger(json, opts) {
       return renderUI(json, {
@@ -333,16 +324,16 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
     },
     plugins: [
       ...connetorPlugins,
-      localePlugin({
-        onPackLoad: ({ i18nLangContent }) => {
-          ctx.i18nLangContent = i18nLangContent;
-        },
-        onUsedIdChanged: ({ ids }) => {
-          ctx.i18nUsedIdList = ids;
-        },
-      }),
+      // localePlugin({
+      //   onPackLoad: ({ i18nLangContent }) => {
+      //     ctx.i18nLangContent = i18nLangContent;
+      //   },
+      //   onUsedIdChanged: ({ ids }) => {
+      //     ctx.i18nUsedIdList = ids;
+      //   },
+      // }),
       ...remotePlugins,
-      useTheme({ sdk: appData }),
+      // useTheme({ sdk: appData }),
       versionPlugin({
         user: ctx.user,
         file: appData.fileContent || {},
@@ -395,8 +386,8 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
     ],
     ...(ctx.hasMaterialApp
       ? {
-          comLibAdder: comLibAdderFunc(ctx),
-        }
+        comLibAdder: comLibAdderFunc(ctx),
+      }
       : {}),
     comLibLoader: comlibLoaderFunc(ctx),
     pageContentLoader() {
@@ -436,7 +427,7 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
         );
         return;
       },
-      items({}, cate0, cate1, cate2) {
+      items({ }, cate0, cate1, cate2) {
         const pagesOptions =
           designerRef.current.toJSON?.()?.scenes?.map((item) => ({
             label: item.title,
@@ -462,31 +453,30 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                 },
               },
-              {
-                title: "文件路径",
-                type: "Text",
-                options: { readOnly: true },
-                value: {
-                  get: (context) => {
-                    return ctx.absoluteNamePath;
-                  },
-                  set: (context, v: any) => {
-                    if (v !== ctx.absoluteNamePath) {
-                      ctx.absoluteNamePath = v;
-                    }
-                  },
-                },
-              },
+              // {
+              //   title: "文件路径",
+              //   type: "Text",
+              //   options: { readOnly: true },
+              //   value: {
+              //     get: (context) => {
+              //       return ctx.absoluteNamePath;
+              //     },
+              //     set: (context, v: any) => {
+              //       if (v !== ctx.absoluteNamePath) {
+              //         ctx.absoluteNamePath = v;
+              //       }
+              //     },
+              //   },
+              // },
               {
                 title: "壳应用路由",
                 description: "声明路由关系，哪个路由展示那个页面",
                 type: "array",
                 options: {
                   getTitle: (item) => {
-                    return `${item.route} - ${
-                      pagesOptions.find((o) => o.value === item.pageId)
-                        ?.label || ""
-                    }`;
+                    return `${item.route} - ${pagesOptions.find((o) => o.value === item.pageId)
+                      ?.label || ""
+                      }`;
                   },
                   onAdd: () => {
                     return {
@@ -550,32 +540,32 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
               },
             ],
           },
-          {
-            title: "全局方法",
-            items: [
-              {
-                title: "权限校验",
-                type: "code",
-                description: "设置权限校验方法，调试模式下默认不会启用",
-                options: {
-                  title: "权限校验",
-                  comments: defaultPermissionComments,
-                  displayType: "button",
-                },
-                value: {
-                  get() {
-                    return decodeURIComponent(
-                      ctx?.hasPermissionFn ||
-                        encodeURIComponent(defaultPermissionFn)
-                    );
-                  },
-                  set(context, v: string) {
-                    ctx.hasPermissionFn = encodeURIComponent(v);
-                  },
-                },
-              },
-            ],
-          },
+          // {
+          //   title: "全局方法",
+          //   items: [
+          //     {
+          //       title: "权限校验",
+          //       type: "code",
+          //       description: "设置权限校验方法，调试模式下默认不会启用",
+          //       options: {
+          //         title: "权限校验",
+          //         comments: defaultPermissionComments,
+          //         displayType: "button",
+          //       },
+          //       value: {
+          //         get() {
+          //           return decodeURIComponent(
+          //             ctx?.hasPermissionFn ||
+          //               encodeURIComponent(defaultPermissionFn)
+          //           );
+          //         },
+          //         set(context, v: string) {
+          //           ctx.hasPermissionFn = encodeURIComponent(v);
+          //         },
+          //       },
+          //     },
+          //   ],
+          // },
           {
             title: "调试",
             items: [
@@ -704,206 +694,206 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                 },
               },
-              {
-                title: "权限校验",
-                type: "Switch",
-                description: "调试模式下，是否开启权限校验",
-                value: {
-                  get() {
-                    return ctx.debugHasPermissionFn;
-                  },
-                  set(context, v) {
-                    ctx.debugHasPermissionFn = v;
-                  },
-                },
-              },
-              {
-                title: "路由参数",
-                type: "code",
-                description: "调试模式下，路由的参数配置",
-                options: {
-                  title: "编辑路由参数",
-                  language: "json",
-                  width: 500,
-                  minimap: {
-                    enabled: false,
-                  },
-                  displayType: "button",
-                },
-                value: {
-                  get() {
-                    return ctx.debugQuery
-                      ? JSON.stringify(ctx.debugQuery, null, 2)
-                      : "{}";
-                  },
-                  set(context: any, v: string) {
-                    const jsonString = decodeURIComponent(v);
-                    try {
-                      const jsonData = JSON.parse(jsonString || "{}");
-                      ctx.debugQuery = jsonData;
-                    } catch {
-                      console.error("路由参数数据格式错误");
-                    }
-                  },
-                },
-              },
-              {
-                title: "主应用参数",
-                type: "code",
-                description: "调试模式下，主应用参数配置",
-                options: {
-                  title: "编辑主应用参数",
-                  language: "json",
-                  width: 500,
-                  minimap: {
-                    enabled: false,
-                  },
-                  displayType: "button",
-                },
-                value: {
-                  get() {
-                    return ctx.debugMainProps
-                      ? JSON.stringify(ctx.debugMainProps, null, 2)
-                      : "{}";
-                  },
-                  set(context: any, v: string) {
-                    const jsonString = decodeURIComponent(v);
-                    try {
-                      const jsonData = JSON.parse(jsonString || "{}");
-                      ctx.debugMainProps = jsonData;
-                    } catch {
-                      console.error("主应用参数数据格式错误");
-                    }
-                  },
-                },
-              },
-              createMockConfigEditor(
-                "localStorageMock",
-                "localStorage模拟",
-                "调试模式下，localStorage模拟"
-              ),
-              createMockConfigEditor(
-                "sessionStorageMock",
-                "sessionStorage模拟",
-                "调试模式下，sessionStorage模拟"
-              ),
+              // {
+              //   title: "权限校验",
+              //   type: "Switch",
+              //   description: "调试模式下，是否开启权限校验",
+              //   value: {
+              //     get() {
+              //       return ctx.debugHasPermissionFn;
+              //     },
+              //     set(context, v) {
+              //       ctx.debugHasPermissionFn = v;
+              //     },
+              //   },
+              // },
+              // {
+              //   title: "路由参数",
+              //   type: "code",
+              //   description: "调试模式下，路由的参数配置",
+              //   options: {
+              //     title: "编辑路由参数",
+              //     language: "json",
+              //     width: 500,
+              //     minimap: {
+              //       enabled: false,
+              //     },
+              //     displayType: "button",
+              //   },
+              //   value: {
+              //     get() {
+              //       return ctx.debugQuery
+              //         ? JSON.stringify(ctx.debugQuery, null, 2)
+              //         : "{}";
+              //     },
+              //     set(context: any, v: string) {
+              //       const jsonString = decodeURIComponent(v);
+              //       try {
+              //         const jsonData = JSON.parse(jsonString || "{}");
+              //         ctx.debugQuery = jsonData;
+              //       } catch {
+              //         console.error("路由参数数据格式错误");
+              //       }
+              //     },
+              //   },
+              // },
+              // {
+              //   title: "主应用参数",
+              //   type: "code",
+              //   description: "调试模式下，主应用参数配置",
+              //   options: {
+              //     title: "编辑主应用参数",
+              //     language: "json",
+              //     width: 500,
+              //     minimap: {
+              //       enabled: false,
+              //     },
+              //     displayType: "button",
+              //   },
+              //   value: {
+              //     get() {
+              //       return ctx.debugMainProps
+              //         ? JSON.stringify(ctx.debugMainProps, null, 2)
+              //         : "{}";
+              //     },
+              //     set(context: any, v: string) {
+              //       const jsonString = decodeURIComponent(v);
+              //       try {
+              //         const jsonData = JSON.parse(jsonString || "{}");
+              //         ctx.debugMainProps = jsonData;
+              //       } catch {
+              //         console.error("主应用参数数据格式错误");
+              //       }
+              //     },
+              //   },
+              // },
+              // createMockConfigEditor(
+              //   "localStorageMock",
+              //   "localStorage模拟",
+              //   "调试模式下，localStorage模拟"
+              // ),
+              // createMockConfigEditor(
+              //   "sessionStorageMock",
+              //   "sessionStorage模拟",
+              //   "调试模式下，sessionStorage模拟"
+              // ),
             ],
           },
-          {
-            items: [
-              {
-                title: "iconfont js链接",
-                type: "Text",
-                description: "设置iconfont js链接",
-                value: {
-                  get() {
-                    return ctx.fontJS;
-                  },
-                  set(context, v: string) {
-                    ctx.fontJS = v;
-                    createFromIconfontCN({
-                      scriptUrl: v, // 在 iconfont.cn 上生成
-                    });
-                  },
-                },
-              },
-            ],
-          },
+          // {
+          //   items: [
+          //     {
+          //       title: "iconfont js链接",
+          //       type: "Text",
+          //       description: "设置iconfont js链接",
+          //       value: {
+          //         get() {
+          //           return ctx.fontJS;
+          //         },
+          //         set(context, v: string) {
+          //           ctx.fontJS = v;
+          //           createFromIconfontCN({
+          //             scriptUrl: v, // 在 iconfont.cn 上生成
+          //           });
+          //         },
+          //       },
+          //     },
+          //   ],
+          // },
         ];
       },
       editorOptions: ctx.setting?.system.config?.isPureIntranet
         ? {
-            expression: {
-              CDN: {
-                codemirror:
-                  "/mfs/editor_assets/codemirror/codemirror_1.0.13_index.min.js",
-              },
+          expression: {
+            CDN: {
+              codemirror:
+                "/mfs/editor_assets/codemirror/codemirror_1.0.13_index.min.js",
             },
-            richtext: {
-              CDN: {
-                tinymce:
-                  "/mfs/editor_assets/richText/tinymce/5.7.1/tinymce.min.js",
-                language: "/mfs/editor_assets/richText/tinymce/5.7.1/zh_CN.js",
-              },
+          },
+          richtext: {
+            CDN: {
+              tinymce:
+                "/mfs/editor_assets/richText/tinymce/5.7.1/tinymce.min.js",
+              language: "/mfs/editor_assets/richText/tinymce/5.7.1/zh_CN.js",
             },
-            align: {
-              CDN: {
-                left: "/mfs/editor_assets/align/left.defc4a63ebe8ea7d.svg",
-                rowCenter:
-                  "/mfs/editor_assets/align/center.c284343a9ff9672a.svg",
-                right: "/mfs/editor_assets/align/right.a7763b38b84b5894.svg",
-                top: "/mfs/editor_assets/align/top.98906024d52b69de.svg",
-                columnCenter:
-                  "/mfs/editor_assets/align/center.100376f4ade480cd.svg",
-                bottom: "/mfs/editor_assets/align/bottom.6ee532067ed440ca.svg",
-                column:
-                  "/mfs/editor_assets/align/column-space-between.31d560c0e611198f.svg",
-                row: "/mfs/editor_assets/align/row-space-between.ead5cd660c0f1c33.svg",
-              },
+          },
+          align: {
+            CDN: {
+              left: "/mfs/editor_assets/align/left.defc4a63ebe8ea7d.svg",
+              rowCenter:
+                "/mfs/editor_assets/align/center.c284343a9ff9672a.svg",
+              right: "/mfs/editor_assets/align/right.a7763b38b84b5894.svg",
+              top: "/mfs/editor_assets/align/top.98906024d52b69de.svg",
+              columnCenter:
+                "/mfs/editor_assets/align/center.100376f4ade480cd.svg",
+              bottom: "/mfs/editor_assets/align/bottom.6ee532067ed440ca.svg",
+              column:
+                "/mfs/editor_assets/align/column-space-between.31d560c0e611198f.svg",
+              row: "/mfs/editor_assets/align/row-space-between.ead5cd660c0f1c33.svg",
             },
-            array: {
-              CDN: {
-                sortableHoc:
-                  "/mfs/editor_assets/react-sortable/react-sortable-hoc-2.0.0_index.umd.min.js",
-              },
+          },
+          array: {
+            CDN: {
+              sortableHoc:
+                "/mfs/editor_assets/react-sortable/react-sortable-hoc-2.0.0_index.umd.min.js",
             },
-            expcode: {
-              CDN: {
-                prettier: {
-                  standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
-                  babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
-                },
-                eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
-                paths: {
-                  vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
-                },
-                monacoLoader:
-                  "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+          },
+          expcode: {
+            CDN: {
+              prettier: {
+                standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
+                babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
               },
-            },
-            csseditor: {
-              CDN: {
-                prettier: {
-                  standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
-                  babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
-                },
-                eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
-                paths: {
-                  vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
-                },
-                monacoLoader:
-                  "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+              eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
+              paths: {
+                vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
               },
+              monacoLoader:
+                "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
             },
-            stylenew: {
-              CDN: {
-                prettier: {
-                  standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
-                  babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
-                },
-                eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
-                paths: {
-                  vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
-                },
-                monacoLoader:
-                  "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+          },
+          csseditor: {
+            CDN: {
+              prettier: {
+                standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
+                babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
               },
-            },
-            code: {
-              CDN: {
-                prettier: {
-                  standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
-                  babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
-                },
-                eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
-                paths: {
-                  vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
-                },
-                monacoLoader:
-                  "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+              eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
+              paths: {
+                vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
               },
+              monacoLoader:
+                "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
             },
-          }
+          },
+          stylenew: {
+            CDN: {
+              prettier: {
+                standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
+                babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
+              },
+              eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
+              paths: {
+                vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
+              },
+              monacoLoader:
+                "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+            },
+          },
+          code: {
+            CDN: {
+              prettier: {
+                standalone: "/mfs/editor_assets/prettier/2.6.2/standalone.js",
+                babel: "/mfs/editor_assets/prettier/2.6.2/parser-babel.js",
+              },
+              eslint: "/mfs/editor_assets/eslint/8.15.0/eslint.js",
+              paths: {
+                vs: "/mfs/editor_assets/monaco-editor/0.33.0/min/vs",
+              },
+              monacoLoader:
+                "/mfs/editor_assets/monaco-editor/0.33.0/min/vs/loader.min.js",
+            },
+          },
+        }
         : undefined,
     },
     com: {
