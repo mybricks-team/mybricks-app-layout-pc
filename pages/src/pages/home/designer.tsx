@@ -86,7 +86,13 @@ export default function MyDesigner({ appData: originAppData }) {
       fileId: appData.fileId,
       setting: appData.config || {},
       hasMaterialApp: appData.hasMaterialApp,
-      comlibs: getLibsFromConfig(appData),
+      // comlibs: getLibsFromConfig(appData),
+      // TODO: 等内网 lowcode 物料市场弄好了，改为从物料市场获取
+      comlibs: [
+        "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.65/2024-03-29_17-51-11/edit.js",
+        "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/edit.js",
+        "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.2/2024-04-02_14-31-36/edit.js"
+      ],
       latestComlibs: [],
       debugQuery: appData.fileContent?.content?.debugQuery,
       executeEnv,
