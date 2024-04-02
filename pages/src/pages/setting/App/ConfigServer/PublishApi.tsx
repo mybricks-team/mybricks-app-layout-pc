@@ -6,7 +6,10 @@ import dayjs from "dayjs";
 import { TConfigProps } from "../useConfig";
 const { Meta } = Card;
 
-const fieldName = `publishApi`;
+enum FieldName {
+  PublishAPI = `publishApi`,
+  Domain = "domain"
+}
 
 export default ({ config, mergeUpdateConfig, loading, user }: TConfigProps) => {
   const [form] = Form.useForm();
@@ -26,7 +29,7 @@ export default ({ config, mergeUpdateConfig, loading, user }: TConfigProps) => {
   const onReset = () => {
     const updateTime = dayjs(Date.now()).format("YYYY-MM-DD HH:mm:ss");
     mergeUpdateConfig({
-      publishApiConfig: { [fieldName]: "", updateTime, user: user?.email },
+      publishApiConfig: { [FieldName.PublishAPI]: "", updateTime, user: user?.email },
     }).finally(() => {
       form.resetFields();
     });
@@ -36,11 +39,18 @@ export default ({ config, mergeUpdateConfig, loading, user }: TConfigProps) => {
     <>
       <Form form={form} onFinish={onSubmit} style={{ marginTop: 12 }}>
         <Form.Item
-          name={fieldName}
+          name={FieldName.PublishAPI}
           label="发布集成接口"
           tooltip="发布时会自动调用该接口向用户系统发送产物信息（如html页面内容）"
         >
           <Input placeholder="https://my.mybricks.world/publish" />
+        </Form.Item>
+        <Form.Item
+          name={FieldName.Domain}
+          label="访问域名"
+          tooltip="发布后的页面可在此域名下访问"
+        >
+          <Input placeholder="www.xxx.com" />
         </Form.Item>
         <Form.Item style={{ textAlign: "right" }}>
           {Object.keys(publishApiConfig).length > 0 && (
