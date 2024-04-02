@@ -36,7 +36,7 @@ export default (props: TConfigProps) => {
   }
 
   return <>
-    <UploadConfig {...props} />
+    {/* <UploadConfig {...props} /> */}
     <PublishApi {...props} />
     {/* <PublishLocalize {...props} /> */}
   </>

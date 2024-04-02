@@ -26,9 +26,9 @@ export default (props) => {
         {
           !isInGroup && (
             <>
-              <Collapse.Panel key={1} header="基础设置">
+              {/* <Collapse.Panel key={1} header="基础设置">
                 <ConfigBase {...configContext} />
-              </Collapse.Panel> 
+              </Collapse.Panel>  */}
               <Collapse.Panel key={2} header="服务扩展">
                 <ConfigServer {...configContext} />
               </Collapse.Panel>
@@ -44,9 +44,9 @@ export default (props) => {
         <Collapse.Panel key={3} header="发布环境">
           <ConfigEnv {...configContext} />
         </Collapse.Panel>
-        {!isInGroup && <Collapse.Panel key={4} header="插件扩展">
+        {/* {!isInGroup && <Collapse.Panel key={4} header="插件扩展">
           <ConfigPlugin {...configContext} />
-        </Collapse.Panel>}
+        </Collapse.Panel>} */}
       </Collapse>
     </Spin>
   )
