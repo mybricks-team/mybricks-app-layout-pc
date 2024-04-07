@@ -37,9 +37,6 @@ const root = ({ renderType, locale, runtime, ...props }) => {
     // 获取当前路由
     var currentRoute = window.location.pathname;
     const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute.substring(window['layoutPC__basePathname']?.length)) ?? {}
-    // const pageId = window["layoutPC__routerParams"]?.find(
-    //   (item: any) => item.route === currentRoute
-    // )?.pageId;
     refsRef.current.canvas.open(pageId, null, "redirect");
   });
 

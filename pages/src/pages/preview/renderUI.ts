@@ -37,10 +37,7 @@ const root = ({ renderType, env, ...props }) => {
   window.addEventListener("popstate", (...args) => {
     // 获取当前路由
     var currentRoute = window.location.pathname;
-    const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute) ?? {}
-    // const pageId = window["layoutPC__routerParams"]?.find(
-    //   (item: any) => item.route === currentRoute
-    // )?.pageId;
+    const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute.substring(window['layoutPC__basePathname']?.length)) ?? {}
     refsRef.current.canvas.open(pageId, null, "redirect");
   });
 
@@ -96,8 +93,8 @@ const root = ({ renderType, env, ...props }) => {
           const curConnector = connector.script
             ? connector
             : (dumpJson.plugins[connector.connectorName] || []).find(
-                (con) => con.id === connector.id
-              );
+              (con) => con.id === connector.id
+            );
 
           if (curConnector?.globalMock || connectorConfig?.openMock) {
             return connectorHttpMock({ ...connector, ...connectorConfig }, {});
@@ -105,35 +102,35 @@ const root = ({ renderType, env, ...props }) => {
 
           return curConnector
             ? plugin.call(
-                { ...connector, ...curConnector, useProxy: !directConnection },
-                newParams,
-                {
-                  ...connectorConfig,
-                  /** http-sql表示为领域接口 */
-                  before:
-                    connector.type === "http-sql"
-                      ? (options) => {
-                          const newOptions = { ...options };
-                          if (!newOptions.headers) {
-                            newOptions.headers = {};
-                          }
-                          newOptions.headers["x-mybricks-debug"] = "true";
+              { ...connector, ...curConnector, useProxy: !directConnection },
+              newParams,
+              {
+                ...connectorConfig,
+                /** http-sql表示为领域接口 */
+                before:
+                  connector.type === "http-sql"
+                    ? (options) => {
+                      const newOptions = { ...options };
+                      if (!newOptions.headers) {
+                        newOptions.headers = {};
+                      }
+                      newOptions.headers["x-mybricks-debug"] = "true";
 
-                          return newOptions;
-                        }
-                      : (options) => {
-                          return {
-                            ...options,
-                            url: shapeUrlByEnv(
-                              envList,
-                              executeEnv,
-                              options.url,
-                              MYBRICKS_HOST
-                            ),
-                          };
-                        },
-                }
-              )
+                      return newOptions;
+                    }
+                    : (options) => {
+                      return {
+                        ...options,
+                        url: shapeUrlByEnv(
+                          envList,
+                          executeEnv,
+                          options.url,
+                          MYBRICKS_HOST
+                        ),
+                      };
+                    },
+              }
+            )
             : Promise.reject("接口不存在，请检查连接器插件中接口配置");
         } else {
           return Promise.reject("错误的连接器类型");

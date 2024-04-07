@@ -23,21 +23,23 @@ module.exports = merge(common, {
     client: {
       logging: 'info',
     },
-    // open: `http://localhost:8001`,
+    historyApiFallback: {
+      rewrites: [
+        {
+          from: /^\/preview[^.]/, to: '/preview.html'
+        },
+      ],
+    },
     proxy: [
       {
         context: ['/api/pcpage/publish', '/api/pcpage/upload', '/api/pcpage/rollback', '/api/pcpage/download-product', '/api/pcpage/custom-publish'],
-        // target: 'https://my.mybricks.world',
         target: 'http://localhost:9002/mybricks-app-layout-pc',
         secure: false,
         changeOrigin: true,
       },
       {
-        context: ['/'],
+        context: ['/public', '/css', '/js', '/paas', '/api', '/default_avatar.png'],
         target: 'https://test.mybricks.world/',
-        // target: 'http://dev.manateeai.com/',
-        // target: 'https://my.mybricks.world',
-        // target: 'http://localhost:3100',
         secure: false,
         changeOrigin: true,
       },

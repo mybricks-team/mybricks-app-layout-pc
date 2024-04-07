@@ -5,6 +5,7 @@ export class PreviewStorage {
 
   constructor({ fileId }) {
     this.fileId = fileId
+    sessionStorage.setItem(`--preview-fileId-`, fileId)
   }
 
   getFileKeyTemplate = (fileId) => `--preview-${fileId}-`;
