@@ -12,6 +12,7 @@ import { PreviewStorage } from "@/utils/previewStorage";
 import connectorHttpMock from "@mybricks/plugin-connector-http/runtime/mock";
 import { call as callDomainHttp } from "@mybricks/plugin-connector-domain/runtime";
 import { proxLocalStorage, proxSessionStorage } from "@/utils/debugMockUtils";
+import dfs from "@/utils/dfs";
 
 const fileId = getQueryString("fileId");
 const USE_CUSTOM_HOST = "__USE_CUSTOM_HOST__";
@@ -36,9 +37,10 @@ const root = ({ renderType, env, ...props }) => {
   window.addEventListener("popstate", (...args) => {
     // 获取当前路由
     var currentRoute = window.location.pathname;
-    const pageId = window["layoutPC__routerParams"]?.find(
-      (item: any) => item.route === currentRoute
-    )?.pageId;
+    const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute) ?? {}
+    // const pageId = window["layoutPC__routerParams"]?.find(
+    //   (item: any) => item.route === currentRoute
+    // )?.pageId;
     refsRef.current.canvas.open(pageId, null, "redirect");
   });
 

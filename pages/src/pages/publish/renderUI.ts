@@ -1,4 +1,5 @@
 import { getComs, shapeUrlByEnv, parseQuery, getRenderWeb } from "@/utils";
+import dfs from "@/utils/dfs";
 import { runJs } from "@/utils/runJs";
 
 const USE_CUSTOM_HOST = "__USE_CUSTOM_HOST__";
@@ -35,9 +36,10 @@ const root = ({ renderType, locale, runtime, ...props }) => {
   window.addEventListener("popstate", (...args) => {
     // 获取当前路由
     var currentRoute = window.location.pathname;
-    const pageId = window["layoutPC__routerParams"]?.find(
-      (item: any) => window['layoutPC__basePathname'] + item.route === currentRoute
-    )?.pageId;
+    const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute.substring(window['layoutPC__basePathname']?.length)) ?? {}
+    // const pageId = window["layoutPC__routerParams"]?.find(
+    //   (item: any) => item.route === currentRoute
+    // )?.pageId;
     refsRef.current.canvas.open(pageId, null, "redirect");
   });
 

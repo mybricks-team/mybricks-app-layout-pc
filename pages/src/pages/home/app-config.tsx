@@ -26,6 +26,12 @@ import { fAxios } from "@/services/http";
 import { createFromIconfontCN } from "@ant-design/icons";
 import download from "@/utils/download";
 import { render as renderUI } from "@mybricks/render-web";
+import dfs from "@/utils/dfs";
+
+enum MenuTypeEnum {
+  Menu = "menu",
+  Submenu = "submenu",
+}
 
 const defaultPermissionComments = `/**
 *
@@ -157,9 +163,10 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
   window.addEventListener("popstate", (...args) => {
     // 获取当前路由
     var currentRoute = window.location.pathname;
-    const pageId = window["layoutPC__routerParams"]?.find(
-      (item: any) => item.route === currentRoute
-    )?.pageId;
+    const { pageId } = dfs(window["layoutPC__routerParams"], 'route', currentRoute) ?? {}
+    // const pageId = window["layoutPC__routerParams"]?.find(
+    //   (item: any) => item.route === currentRoute
+    // )?.pageId;
     pageId && refsRef.current.canvas.open(pageId, null, "redirect");
   });
 
@@ -470,24 +477,40 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
               // },
               {
                 title: "壳应用路由",
-                description: "声明路由关系，哪个路由展示那个页面",
-                type: "array",
+                description: "声明路由关系，哪个路由展示哪个页面",
+                type: "Tree",
                 options: {
-                  getTitle: (item) => {
-                    return `${item.route} - ${pagesOptions.find((o) => o.value === item.pageId)
-                      ?.label || ""
-                      }`;
-                  },
+                  // getTitle: (item) => {
+                  //   return `${item.route} - ${pagesOptions.find((o) => o.value === item.pageId)
+                  //     ?.label || ""
+                  //     }`;
+                  // },
                   onAdd: () => {
+                    const id = (Math.random() * 10000 * Date.now()).toString(36);
                     return {
-                      id: (Math.random() * 10000 * Date.now()).toString(36),
+                      id,
+                      title: `菜单项${id}`,
+                      menuType: MenuTypeEnum.Menu,
                     };
+                  },
+                  addItemGoal: {
+                    key: "menuType",
+                    value: [ MenuTypeEnum.Submenu ],
                   },
                   items: [
                     {
+                      title: "类型",
+                      type: "Select",
+                      options: [
+                        { label: "子菜单", value: MenuTypeEnum.Menu },
+                        { label: "父菜单", value: MenuTypeEnum.Submenu },
+                      ],
+                      value: "menuType",
+                    },
+                    {
                       title: "菜单项标题",
                       type: "text",
-                      value: "menuTitle",
+                      value: "title",
                     },
                     {
                       title: "路由",
@@ -505,26 +528,7 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                       type: "text",
                       value: "pageUrl",
                     },
-                    {
-                      title: "父菜单项",
-                      type: "select",
-                      value: "parentId",
-                      options: () => {
-                        const menuOptions = ctx.routerParams.map((item) => ({
-                          label: item.menuTitle,
-                          value: item.id,
-                        }));
-                        return {
-                          options: menuOptions,
-                          showSearch: true,
-                          allowClear: true,
-                        };
-                      },
-                    },
                   ],
-                  addable: true,
-                  deletable: true,
-                  draggable: true,
                 },
                 value: {
                   get({ data, focusArea }) {
@@ -538,6 +542,76 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                 },
               },
+              // {
+              //   title: "壳应用路由",
+              //   description: "声明路由关系，哪个路由展示那个页面",
+              //   type: "array",
+              //   options: {
+              //     getTitle: (item) => {
+              //       return `${item.route} - ${pagesOptions.find((o) => o.value === item.pageId)
+              //         ?.label || ""
+              //         }`;
+              //     },
+              //     onAdd: () => {
+              //       return {
+              //         id: (Math.random() * 10000 * Date.now()).toString(36),
+              //       };
+              //     },
+              //     items: [
+              //       {
+              //         title: "菜单项标题",
+              //         type: "text",
+              //         value: "menuTitle",
+              //       },
+              //       {
+              //         title: "路由",
+              //         type: "text",
+              //         value: "route",
+              //       },
+              //       {
+              //         title: "页面",
+              //         type: "select",
+              //         value: "pageId",
+              //         options: { options: pagesOptions, showSearch: true },
+              //       },
+              //       {
+              //         title: "子应用页面URL",
+              //         type: "text",
+              //         value: "pageUrl",
+              //       },
+              //       {
+              //         title: "父菜单项",
+              //         type: "select",
+              //         value: "parentId",
+              //         options: () => {
+              //           const menuOptions = ctx.routerParams.map((item) => ({
+              //             label: item.menuTitle,
+              //             value: item.id,
+              //           }));
+              //           return {
+              //             options: menuOptions,
+              //             showSearch: true,
+              //             allowClear: true,
+              //           };
+              //         },
+              //       },
+              //     ],
+              //     addable: true,
+              //     deletable: true,
+              //     draggable: true,
+              //   },
+              //   value: {
+              //     get({ data, focusArea }) {
+              //       return ctx.routerParams;
+              //     },
+              //     set({ data, focusArea, output, input, ...res }, value) {
+              //       ctx.routerParams = value;
+              //       window["layoutPC__onRouterParamsChange"]?.forEach((fn) =>
+              //         fn(value)
+              //       );
+              //     },
+              //   },
+              // },
             ],
           },
           // {
