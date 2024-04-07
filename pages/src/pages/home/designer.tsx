@@ -91,7 +91,7 @@ export default function MyDesigner({ appData: originAppData }) {
       comlibs: [
         "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.65/2024-03-29_17-51-11/edit.js",
         "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/edit.js",
-        "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.4/2024-04-07_10-52-31/edit.js"
+        "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.5/2024-04-07_20-54-25/edit.js"
       ],
       latestComlibs: [],
       debugQuery: appData.fileContent?.content?.debugQuery,
