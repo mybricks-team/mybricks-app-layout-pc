@@ -22,6 +22,7 @@ module.exports = merge(common, {
     hot: true,
     client: {
       logging: 'info',
+      overlay: false
     },
     historyApiFallback: {
       rewrites: [
