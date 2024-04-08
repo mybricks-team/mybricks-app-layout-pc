@@ -89,9 +89,66 @@ export default function MyDesigner({ appData: originAppData }) {
       // comlibs: getLibsFromConfig(appData),
       // TODO: 等内网 lowcode 物料市场弄好了，改为从物料市场获取
       comlibs: [
-        "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.65/2024-03-29_17-51-11/edit.js",
-        "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/edit.js",
-        "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/edit.js"
+        {
+          "comAray": [],
+          "id": "_myself_",
+          "title": "我的组件",
+          "defined": true
+        },
+        {
+          "id": "7182",
+          "namespace": "mybricks.basic-comlib",
+          "version": "1.1.21",
+          "editJs": "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/edit.js",
+          "rtJs": "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/rt.js",
+          "coms": "https://assets.mybricks.world/comlibs/mybricks.basic-comlib/1.1.21/2024-04-01_15-13-53/rtCom.js"
+        },
+        {
+          "id": "7632",
+          "namespace": "mybricks.normal-pc",
+          "version": "1.5.66",
+          "editJs": "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.66/2024-04-01_21-34-56/edit.js",
+          "rtJs": "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.66/2024-04-01_21-34-56/rt.js",
+          "coms": "https://assets.mybricks.world/comlibs/mybricks.normal-pc/1.5.66/2024-04-01_21-34-56/rtCom.js"
+        },
+        {
+          "id": 551827577622597,
+          "type": "com_lib",
+          "scope_status": 3,
+          "namespace": "mybricks.pc-layout",
+          "version": "1.0.6",
+          "creator_id": "483208459444293",
+          "creator_name": "",
+          "create_time": 1712560329693,
+          "update_time": 1712560329693,
+          "updator_id": "483208459444293",
+          "updator_name": "",
+          "icon": "",
+          "preview_img": "",
+          "title": "壳工程应用专用组件库",
+          "description": "",
+          "status": 1,
+          "meta": "",
+          "scene_id": 1,
+          "material_id": 551827577622597,
+          "editJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/edit.js",
+          "rtJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/rt.js",
+          "coms": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/rtCom.js",
+          "deps": [
+            {
+              "namespace": "mybricks.layout-pc.listen-to-route-change",
+              "version": "1.0.0"
+            },
+            {
+              "namespace": "mybricks.layout-pc.menu",
+              "version": "1.0.10"
+            },
+            {
+              "namespace": "comlib-pc-portal.pc.micro-app-renderer",
+              "version": "1.1.2"
+            }
+          ]
+        }
       ],
       latestComlibs: [],
       debugQuery: appData.fileContent?.content?.debugQuery,

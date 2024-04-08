@@ -9,6 +9,7 @@ import { handleTemplate } from "./handle-template";
 import { localization } from "./localization";
 import { publishPush } from "./push";
 import { saveRollbackData } from "./save-rollback-data";
+import { jsonStringWithShortenedStrings } from "../../tools/logger";
 
 let app_type;
 
@@ -84,8 +85,9 @@ export async function publish(
     template = __template;
 
     const startComboScriptTime = Date.now();
-    
+
     Logger.info(`[publish] 开始处理组件库脚本`);
+    Logger.info(`[publish] 接收到的组件库数据: ${jsonStringWithShortenedStrings(comlibs, 100)}`);
 
     const comboScriptText = await getComboScriptText(
       comlibs,
@@ -130,8 +132,7 @@ export async function publish(
     return { ...result, fileId, envType, version };
   } catch (e) {
     Logger.error(
-      `[publish] pcpage publish error ${
-        e?.message || JSON.stringify(e, null, 2)
+      `[publish] pcpage publish error ${e?.message || JSON.stringify(e, null, 2)
       }`
     );
     throw e;
