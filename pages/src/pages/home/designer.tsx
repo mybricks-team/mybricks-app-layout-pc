@@ -131,9 +131,9 @@ export default function MyDesigner({ appData: originAppData }) {
           "meta": "",
           "scene_id": 1,
           "material_id": 551827577622597,
-          "editJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/edit.js",
-          "rtJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/rt.js",
-          "coms": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.6/2024-04-08_14-53-30/rtCom.js",
+          "editJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.7/2024-04-08_15-59-56/edit.js",
+          "rtJs": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.7/2024-04-08_15-59-56/rt.js",
+          "coms": "https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.7/2024-04-08_15-59-56/rtCom.js",
           "deps": [
             {
               "namespace": "mybricks.layout-pc.listen-to-route-change",
