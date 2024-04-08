@@ -1,3 +1,116 @@
 export const USE_CUSTOM_HOST = '__USE_CUSTOM_HOST__'
 
-export const PROJECT_ENV = [{ title: '测试环境', name: 'staging' }, { title: '线上环境', name: 'prod' }]
+export const PROJECT_ENV = [{ title: '测试环境', name: 'staging' }, { title: '线上环境', name: 'prod' }]、
+
+export const cssVariableMap = {
+  "--scroll-bar": "0",
+  "--primary-color": "#fa6400",
+  "--primary-color-hover": "#f55753",
+  "--primary-color-active": "#fa640033",
+  "--primary-color-confirm": "#fa6400a6",
+  "--success-color": "#52c41a",
+  "--warning-color": "#faad14",
+  "--font-size-header": "14px",
+  "--font-size-content": "12px",
+  "--font-color-header": "rgba(0, 0, 0, 0.85)",
+  "--font-color-content": "rgba(0, 0, 0, 0.85)",
+  "--font-color-disabled": "rgba(0, 0, 0, 0.25)",
+  "--border-radius": "4px",
+  "--box-shadow": "0 0 0 2px #fa640033",
+  "--box-shadow-primary": "0 2px 8px rgba(0, 0, 0, 0.15)",
+  "--box-shadow-hover":
+    "0 3px 6px rgba(208, 2, 27, 0.16),0 3px 6px rgba(208, 2, 27, 0.23)",
+  "--ant-primary-color": "var(--mybricks-primary-color)",
+  "--ant-primary-color-hover": "var(--mybricks-primary-color-hover)",
+  "--ant-primary-color-active": "var(--mybricks-primary-color-active)",
+  "--ant-primary-color-outline": "var(--mybricks-primary-color-outline)",
+  "--ant-primary-1": "var(--mybricks-primary-1)",
+  "--ant-primary-2": "var(--mybricks-primary-2)",
+  "--ant-primary-3": "var(--mybricks-primary-3)",
+  "--ant-primary-4": "var(--mybricks-primary-4)",
+  "--ant-primary-5": "var(--mybricks-primary-5)",
+  "--ant-primary-6": "var(--mybricks-primary-6)",
+  "--ant-primary-7": "var(--mybricks-primary-7)",
+  "--ant-primary-color-deprecated-l-35":
+    "var(--mybricks-primary-color-deprecated-l-35)",
+  "--ant-primary-color-deprecated-l-20":
+    "var(--mybricks-primary-color-deprecated-l-20)",
+  "--ant-primary-color-deprecated-t-20":
+    "var(--mybricks-primary-color-deprecated-t-20)",
+  "--ant-primary-color-deprecated-t-50":
+    "var(--mybricks-primary-color-deprecated-t-50)",
+  "--ant-primary-color-deprecated-f-12":
+    "var(--mybricks-primary-color-deprecated-f-12)",
+  "--ant-primary-color-active-deprecated-f-30":
+    "var(--mybricks-primary-color-active-deprecated-f-30)",
+  "--ant-primary-color-active-deprecated-d-02":
+    "var(--mybricks-primary-color-active-deprecated-d-02)",
+  "--ant-success-color": "var(--mybricks-success-color)",
+  "--ant-success-color-hover": "var(--mybricks-success-color-hover)",
+  "--ant-success-color-active": "var(--mybricks-success-color-active)",
+  "--ant-success-color-outline": "var(--mybricks-success-color-outline)",
+  "--ant-success-color-deprecated-bg":
+    "var(--mybricks-success-color-deprecated-bg)",
+  "--ant-success-color-deprecated-border":
+    "var(--mybricks-success-color-deprecated-border)",
+  "--ant-error-color": "var(--mybricks-error-color)",
+  "--ant-error-color-hover": "var(--mybricks-error-color-hover)",
+  "--ant-error-color-active": "var(--mybricks-error-color-active)",
+  "--ant-error-color-outline": "var(--mybricks-error-color-outline)",
+  "--ant-error-color-deprecated-bg":
+    "var(--mybricks-error-color-deprecated-bg)",
+  "--ant-error-color-deprecated-border":
+    "var(--mybricks-error-color-deprecated-border)",
+  "--ant-warning-color": "var(--mybricks-warning-color)",
+  "--ant-warning-color-hover": "var(--mybricks-warning-color-hover)",
+  "--ant-warning-color-active": "var(--mybricks-warning-color-active)",
+  "--ant-warning-color-outline": "var(--mybricks-warning-color-outline)",
+  "--ant-warning-color-deprecated-bg":
+    "var(--mybricks-warning-color-deprecated-bg)",
+  "--ant-warning-color-deprecated-border":
+    "var(--mybricks-warning-color-deprecated-border)",
+  "--ant-info-color": "var(--mybricks-info-color)",
+  "--ant-info-color-deprecated-bg": "var(--mybricks-info-color-deprecated-bg)",
+  "--ant-info-color-deprecated-border":
+    "var(--mybricks-info-color-deprecated-border)",
+  "--antd-wave-shadow-color": "var(--ant-primary-color)",
+  "--mybricks-primary-color": "#1890ff",
+  "--mybricks-primary-color-hover": "#40a9ff",
+  "--mybricks-primary-color-active": "#096dd9",
+  "--mybricks-primary-color-outline": "rgba(24,144,255,0.2)",
+  "--mybricks-primary-1": "#e6f7ff",
+  "--mybricks-primary-2": "#bae7ff",
+  "--mybricks-primary-3": "#91d5ff",
+  "--mybricks-primary-4": "#69c0ff",
+  "--mybricks-primary-5": "#40a9ff",
+  "--mybricks-primary-6": "#1890ff",
+  "--mybricks-primary-7": "#096dd9",
+  "--mybricks-success-color": "#52c41a",
+  "--mybricks-success-color-hover": "#73d13d",
+  "--mybricks-success-color-active": "#389e0d",
+  "--mybricks-success-color-outline": "rgba(82,196,26,0.2)",
+  "--mybricks-error-color": "#ff4d4f",
+  "--mybricks-error-color-hover": "#ff7875",
+  "--mybricks-error-color-active": "#d9363e",
+  "--mybricks-error-color-outline": "rgba(255,77,79,0.2)",
+  "--mybricks-warning-color": "#faad14",
+  "--mybricks-warning-color-hover": "#ffc53d",
+  "--mybricks-warning-color-active": "#d48806",
+  "--mybricks-warning-color-outline": "rgba(250,173,20,0.2)",
+  "--mybricks-info-color": "#1890ff",
+  "--mybricks-primary-color-deprecated-l-35": "#cbe6ff",
+  "--mybricks-primary-color-deprecated-l-20": "#7ec1ff",
+  "--mybricks-primary-color-deprecated-t-20": "#46a6ff",
+  "--mybricks-primary-color-deprecated-t-50": "#8cc8ff",
+  "--mybricks-primary-color-deprecated-f-12": "rgba(24,144,255,0.12)",
+  "--mybricks-primary-color-active-deprecated-f-30": "rgba(230,247,255,0.3)",
+  "--mybricks-primary-color-active-deprecated-d-02": "#dcf4ff",
+  "--mybricks-success-color-deprecated-bg": "#f6ffed",
+  "--mybricks-success-color-deprecated-border": "#b7eb8f",
+  "--mybricks-error-color-deprecated-bg": "#fff2f0",
+  "--mybricks-error-color-deprecated-border": "#ffccc7",
+  "--mybricks-warning-color-deprecated-bg": "#fffbe6",
+  "--mybricks-warning-color-deprecated-border": "#ffe58f",
+  "--mybricks-info-color-deprecated-bg": "#e6f7ff",
+  "--mybricks-info-color-deprecated-border": "#91d5ff",
+};

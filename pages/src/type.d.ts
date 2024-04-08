@@ -13,6 +13,8 @@ declare interface Window {
   ReactDOM: ReactDOM;
   antd: any;
   pluginConnectorDomain: Function;
+
+  mybricks?: any
 }
 
 declare type RenderWeb = {
@@ -22,4 +24,6 @@ declare type RenderWeb = {
   ) => any;
 };
 
+declare const APP_NAME: string;
 declare const APP_TYPE: string;
+declare const APP_VERSION: string;

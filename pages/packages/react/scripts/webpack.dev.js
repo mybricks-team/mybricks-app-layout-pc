@@ -40,7 +40,7 @@ module.exports = merge(common, {
       },
       {
         context: ['/public', '/css', '/js', '/paas', '/api', '/default_avatar.png'],
-        target: 'https://test.mybricks.world/',
+        target: 'https://lowcode.staging.kuaishou.com/',
         secure: false,
         changeOrigin: true,
       },

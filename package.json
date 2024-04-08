@@ -3,11 +3,11 @@
   "version": "1.0.2",
   "description": "PC壳应用搭建",
   "scripts": {
-    "watch": "npm i && nodemon --ext js,ts --exec 'NODE_ENV=development MYBRICKS_PLATFORM_ADDRESS=http://test.mybricks.world node nodejs/index.js'",
+    "watch": "npm i && nodemon --ext js,ts --exec 'NODE_ENV=development MYBRICKS_PLATFORM_ADDRESS=https://lowcode.staging.kuaishou.com node nodejs/index.js'",
     "dev": "cd pages && npm run dev:react",
     "build": "cd pages && npm run build:react",
-    "publish:offline": "npm run reInstall:prod && node ./publish.js offline",
-    "publish:online:serviceUpdate": "npm run reInstall:prod && node ./publish.js --origin=https://my.mybricks.world",
+    "publish:offline": "node ./publish.js offline",
+    "publish:online:serviceUpdate": "node ./publish.js --origin=https://my.mybricks.world",
     "reInstall:prod": "rm -rf node_modules && npm install --production && cd pages && rm -rf node_modules && npm install --production && cd .."
   },
   "keywords": [

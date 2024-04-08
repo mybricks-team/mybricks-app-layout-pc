@@ -21,7 +21,7 @@ import { createFromIconfontCN } from '@ant-design/icons';
 import { i18nLangContentFilter } from '../../utils/index';
 
 import { DESIGNER_STATIC_PATH } from '../../constants'
-import { USE_CUSTOM_HOST } from './constants'
+import { USE_CUSTOM_HOST, cssVariableMap } from './constants'
 import { getLibsFromConfig } from '../../utils/getComlibs'
 import { proxLocalStorage, proxSessionStorage } from '@/utils/debugMockUtils'
 import download from '@/utils/download'
@@ -214,7 +214,11 @@ export default function MyDesigner({ appData: originAppData }) {
     }
   })
   const publishingRef = useRef(false)
-  const designerRef = useRef<{ dump; toJSON; geoView; switchActivity; getPluginData, loadContent }>()
+  const designerRef = useRef<{
+    dump; toJSON; geoView; switchActivity; getPluginData, loadContent, themes: {
+      setCSSVar(name: string, value: string): void;
+    };
+  }>()
   const [beforeunload, setBeforeunload] = useState(false)
   const [operable, setOperable] = useState(false)
   const [saveTip, setSaveTip] = useState('')
@@ -223,7 +227,7 @@ export default function MyDesigner({ appData: originAppData }) {
   const [SPADesigner, setSPADesigner] = useState(null);
   const [remotePlugins, setRemotePlugins] = useState(null);
   const [publishModalVisible, setPublishModalVisible] = useState(false)
-  const [latestComlibs, setLatestComlibs] = useState<[]>()
+  const [latestComlibs, setLatestComlibs] = useState<any[]>()
   const [isDebugMode, setIsDebugMode] = useState(false);
   const operationList = useRef<any[]>([]);
 
@@ -237,8 +241,26 @@ export default function MyDesigner({ appData: originAppData }) {
     });
   }, [ctx.fontJS])
 
+  /**
+   * TIP: 如果应用里加了主题插件，就把这个 useEffect 删除掉
+   * 这里是兼容逻辑
+   * 去除了应用市场相关逻辑后，主题样式不知为何消失了
+   */
   useEffect(() => {
-    const needSearchComlibs = ctx.comlibs.filter(lib => lib.id !== "_myself_");
+    const interval = setInterval(() => {
+      if (designerRef.current?.themes?.setCSSVar) {
+        clearInterval(interval)
+        Object.entries(cssVariableMap).forEach(([name, value]) => {
+          designerRef.current.themes.setCSSVar(name, value)
+        })
+      }
+    }, 100)
+  }, [])
+
+  useEffect(() => {
+    // TODO: 等内网 lowcode 物料市场弄好了，取消注释
+    // const needSearchComlibs = ctx.comlibs.filter(lib => lib.id !== "_myself_");
+    const needSearchComlibs = []
     if (!!needSearchComlibs?.length) {
       API.Material.getLatestComponentLibrarys(needSearchComlibs.map(lib => lib.namespace)).then((res: any) => {
         const latestComlibs = (res || []).map(lib => ({ ...lib, ...JSON.parse(lib.content) }))
