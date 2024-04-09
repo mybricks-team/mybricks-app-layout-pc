@@ -39,7 +39,7 @@ module.exports = merge(common, {
         changeOrigin: true,
       },
       {
-        context: ['/public', '/css', '/js', '/paas', '/api', '/default_avatar.png'],
+        context: ['/public', '/css', '/js', '/paas', '/api', '/mfs', '/default_avatar.png'],
         target: 'https://lowcode.staging.kuaishou.com/',
         secure: false,
         changeOrigin: true,
