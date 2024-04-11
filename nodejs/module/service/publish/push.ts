@@ -33,6 +33,8 @@ export async function publishPush(
     comlibRtName,
     fileName,
     userId,
+    deployProdDomainName, 
+    deployStagingDomainName
   } = params;
 
   let uploadfolderPath;
@@ -83,6 +85,8 @@ export async function publishPush(
           content,
           path: `${path}/${name}`,
         })),
+        deployProdDomainName, 
+        deployStagingDomainName
       });
     } catch (e) {
       Logger.error(`[publish] 推送数据失败: ${JSON.stringify(e, null, 2)}`);
@@ -208,6 +212,8 @@ async function customPublish(params) {
     customPublishApi,
     images,
     globalDeps,
+    deployProdDomainName,
+    deployStagingDomainName
   } = params;
 
   let permissions = [];
@@ -248,6 +254,8 @@ async function customPublish(params) {
       images,
       globalDeps,
     },
+    deployProdDomainName,
+    deployStagingDomainName
   });
 
   // 计算发布集成推送数据的 MB 大小 (四舍五入)

@@ -20,6 +20,8 @@ export type CustomPublishDataParams = {
       content: string,
     }[]
   };
+  deployProdDomainName?: string;
+  deployStagingDomainName?: string;
 }
 
 const OWNERS = ['wudi27'];
@@ -33,11 +35,12 @@ export async function customPublish(
 
   try {
     // doing something
-    const { env, productId, publisherEmail, commitInfo, content, groupId, groupName, productName, publisherName, type, version } = customPublishDataParams
+    const { env, productId, publisherEmail, commitInfo, content, groupId, groupName, productName, publisherName, type, version, deployProdDomainName, deployStagingDomainName } = customPublishDataParams
 
     const deployEnv = env === 'prod' ? 'prod' : 'staging';
+    const domain = env === 'prod' ? deployProdDomainName : deployStagingDomainName
 
-    const basePathname = `/layout/scope/${env}/${productId}`;
+    const basePathname = `/layout/scope/${deployEnv}/${productId}`;
 
     Logger.info(`[custom-publish] 正在生成发布内容...`)
     const deployContent = (() => {
@@ -77,11 +80,14 @@ export async function customPublish(
         node_id: NODE_ID,
         /** 服务树 */
         server_tree: SERVER_TREE,
-      }
+      },
+      domain: domain
     }
 
     Logger.info(`[custom-publish] 调用发布集成接口，参数为: ${JSON.stringify({ ...deployData, content: '简化展示信息...' }, null, 2)}`);
+    // TODO: 区分环境发布
     // const res: any = await axios.post('http://localhost:8080/api/paas/kfx/deploy', deployData)
+    // const res: any = await axios.post('https://eshop-fangzhou.staging.kuaishou.com/api/paas/kfx/deploy', deployData)
     const res: any = await axios.post('https://fangzhou.corp.kuaishou.com/api/paas/kfx/deploy', deployData)
 
     if (res.data.code === -1) {

@@ -37,6 +37,8 @@ export async function publish(
       envList = [],
       i18nLangContent,
       routerParams,
+      deployProdDomainName,
+      deployStagingDomainName
     } = json.configuration;
 
     Reflect.deleteProperty(json, "configuration");
@@ -123,6 +125,8 @@ export async function publish(
       comlibRtName,
       fileName,
       userId,
+      deployProdDomainName,
+      deployStagingDomainName
     };
     const result = await publishPush(params, version, true);
 

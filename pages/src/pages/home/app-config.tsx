@@ -480,11 +480,6 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                 description: "声明路由关系，哪个路由展示哪个页面",
                 type: "Tree",
                 options: {
-                  // getTitle: (item) => {
-                  //   return `${item.route} - ${pagesOptions.find((o) => o.value === item.pageId)
-                  //     ?.label || ""
-                  //     }`;
-                  // },
                   onAdd: () => {
                     const id = (Math.random() * 10000 * Date.now()).toString(36);
                     return {
@@ -495,7 +490,7 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                   addItemGoal: {
                     key: "menuType",
-                    value: [ MenuTypeEnum.Submenu ],
+                    value: [MenuTypeEnum.Submenu],
                   },
                   items: [
                     {
@@ -542,6 +537,58 @@ export default function (ctx, appData, save, designerRef, remotePlugins = []) {
                   },
                 },
               },
+              {
+                title: "生产环境部署域名",
+                type: "Text",
+                description: "发布后的页面可在此域名下访问",
+                value: {
+                  get: (context) => {
+                    return ctx.deployProdDomainName;
+                  },
+                  set: (context, value: string) => {
+                    ctx.deployProdDomainName = value;
+                  },
+                },
+              },
+              {
+                title: "测试环境部署域名",
+                type: "Text",
+                description: "发布后的页面可在此域名下访问",
+                value: {
+                  get: (context) => {
+                    return ctx.deployStagingDomainName;
+                  },
+                  set: (context, value: string) => {
+                    ctx.deployStagingDomainName = value;
+                  },
+                },
+              },
+              // {
+              //   title: "生产环境检查登录态接口",
+              //   description: "进入页面前会先调用此接口检查登录态，如果没有登录过则跳转到接口返回的登录页面",
+              //   type: "Text",
+              //   value: {
+              //     get: (context) => {
+              //       return ctx.checkLoginStatusURL;
+              //     },
+              //     set: (context, value: string) => {
+              //       ctx.checkLoginStatusURL = value;
+              //     },
+              //   },
+              // },
+              // {
+              //   title: "测试环境检查登录态接口",
+              //   description: "进入页面前会先调用此接口检查登录态，如果没有登录过则跳转到接口返回的登录页面",
+              //   type: "Text",
+              //   value: {
+              //     get: (context) => {
+              //       return ctx.checkLoginStatusURL;
+              //     },
+              //     set: (context, value: string) => {
+              //       ctx.checkLoginStatusURL = value;
+              //     },
+              //   },
+              // },
               // {
               //   title: "壳应用路由",
               //   description: "声明路由关系，哪个路由展示那个页面",

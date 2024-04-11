@@ -45,13 +45,6 @@ export default ({ config, mergeUpdateConfig, loading, user }: TConfigProps) => {
         >
           <Input placeholder="https://my.mybricks.world/publish" />
         </Form.Item>
-        <Form.Item
-          name={FieldName.Domain}
-          label="访问域名"
-          tooltip="发布后的页面可在此域名下访问"
-        >
-          <Input placeholder="www.xxx.com" />
-        </Form.Item>
         <Form.Item style={{ textAlign: "right" }}>
           {Object.keys(publishApiConfig).length > 0 && (
             <Meta

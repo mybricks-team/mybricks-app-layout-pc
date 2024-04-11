@@ -166,6 +166,8 @@ export default function MyDesigner({ appData: originAppData }) {
       },
       directConnection: appData.fileContent?.content?.directConnection || false,
       routerParams: appData.fileContent?.content?.routerParams || [],
+      deployProdDomainName: appData.fileContent?.content?.deployProdDomainName,
+      deployStagingDomainName: appData.fileContent?.content?.deployStagingDomainName,
       MYBRICKS_HOST: appData.fileContent?.content?.MYBRICKS_HOST || {},
       fontJS: appData.fileContent?.content?.fontJS,
       // 将新设置的环境附加到当前页面中，不能删除原有的环境
@@ -392,6 +394,8 @@ export default function MyDesigner({ appData: originAppData }) {
     json.debugHasPermissionFn = ctx.debugHasPermissionFn
     json.fontJS = ctx.fontJS
     json.routerParams = ctx.routerParams
+    json.deployProdDomainName = ctx.deployProdDomainName
+    json.deployStagingDomainName = ctx.deployStagingDomainName
 
     json.projectId = ctx.sdk.projectId;
 
@@ -465,6 +469,8 @@ export default function MyDesigner({ appData: originAppData }) {
           json.i18nLangContent = i18nLangContentFilter(ctx.i18nLangContent, ctx.i18nUsedIdList)
           json.operationList = operationList.current.reverse();
           json.routerParams = ctx.routerParams
+          json.deployProdDomainName = ctx.deployProdDomainName
+          json.deployStagingDomainName = ctx.deployStagingDomainName
 
           await ctx.save({ content: JSON.stringify(json), name: ctx.fileName }, true);
           operationList.current = [];
@@ -495,6 +501,8 @@ export default function MyDesigner({ appData: originAppData }) {
               groupId: appData?.hierarchy?.groupId || 0,
               appConfig,
               routerParams: ctx.routerParams,
+              deployProdDomainName: ctx.deployProdDomainName,
+              deployStagingDomainName: ctx.deployStagingDomainName
             },
             hasPermissionFn: ctx.hasPermissionFn
           }
