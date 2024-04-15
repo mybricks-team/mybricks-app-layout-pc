@@ -1,6 +1,6 @@
 {
   "name": "mybricks-app-layout-pc",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "PC壳应用搭建",
   "scripts": {
     "watch": "npm i && nodemon --ext js,ts --exec 'NODE_ENV=development MYBRICKS_PLATFORM_ADDRESS=https://lowcode.staging.kuaishou.com node nodejs/index.js'",
