@@ -116,7 +116,7 @@ export default function MyDesigner({ appData: originAppData }) {
           "type": "com_lib",
           "scope_status": 3,
           "namespace": "mybricks.pc-layout",
-          "version": "1.0.10",
+          "version": "1.0.12",
           "creator_id": "483208459444293",
           "creator_name": "",
           "create_time": 1712560329693,
@@ -131,9 +131,9 @@ export default function MyDesigner({ appData: originAppData }) {
           "meta": "",
           "scene_id": 1,
           "material_id": 551827577622597,
-          editJs: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.10/2024-04-15_15-43-49/edit.js',
-          rtJs: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.10/2024-04-15_15-43-49/rt.js',
-          coms: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.10/2024-04-15_15-43-49/rtCom.js'
+          editJs: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.12/2024-04-17_14-53-01/edit.js',
+          rtJs: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.12/2024-04-17_14-53-01/rt.js',
+          coms: 'https://assets.mybricks.world/comlibs/mybricks.pc-layout/1.0.12/2024-04-17_14-53-01/rtCom.js'
         }
       ],
       latestComlibs: [],
